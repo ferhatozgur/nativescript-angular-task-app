@@ -1,0 +1,6 @@
+<StackLayout>
+    <TextField formControlName="title" hint="Görev Başlığı"></TextField>
+    <Picker formControlName="status" [items]="statuses"></Picker>
+    <Button text="Görev Ekle" (tap)="onSubmit()"></Button>
+  </StackLayout>
+  

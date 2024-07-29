@@ -1,0 +1,11 @@
+<StackLayout>
+    <Label [text]="'Hoş geldin, ' + username"></Label>
+    <Button text="Çıkış Yap" (tap)="logout()"></Button>
+    <ListView [items]="tasks">
+      <ng-template let-task="item">
+        <Label [text]="task.title"></Label>
+        <Label [text]="task.status"></Label>
+      </ng-template>
+    </ListView>
+  </StackLayout>
+  
