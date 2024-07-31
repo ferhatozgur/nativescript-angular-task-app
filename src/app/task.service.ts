@@ -1,75 +1,53 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { LocalNotifications } from '@nativescript/local-notifications';
-import { Device } from '@nativescript/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, Subject, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { Task } from './models/task.model';
-
-// Android titreşim işlevini doğrudan eklemek için
-declare var android: any; // Android'le ilgili nesneleri tanıtır
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
   private apiUrl = 'https://jsonplaceholder.typicode.com/todos';
+  private taskAddedSource = new Subject<Task>();
+  taskAdded$ = this.taskAddedSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.apiUrl);
+    return this.http.get<Task[]>(this.apiUrl).pipe(
+      catchError(this.handleError)
+    );
   }
 
   getTask(id: number): Observable<Task> {
-    return this.http.get<Task>(`${this.apiUrl}/${id}`);
+    return this.http.get<Task>(`${this.apiUrl}/${id}`).pipe(
+      catchError(this.handleError)
+    );
   }
 
   createTask(task: Task): Observable<Task> {
+    task.id = Math.floor(Math.random() * 10000);
     return this.http.post<Task>(this.apiUrl, task).pipe(
-      tap(() => {
-        // Görev oluşturulduğunda bildirim ve titreşim
-        LocalNotifications.schedule([{
-          id: 1,
-          title: 'Görev Oluşturuldu',
-          body: 'Yeni görev başarıyla eklendi!',
-        }]);
-
-        if (Device.os === 'Android') {
-          this.vibrate();
-        }
-      })
+      tap((newTask: Task) => this.taskAddedSource.next(newTask)),
+      catchError(this.handleError)
     );
   }
 
   updateTask(id: number, task: Task): Observable<Task> {
-    return this.http.put<Task>(`${this.apiUrl}/${id}`, task).pipe(
-      tap(() => {
-        // Görev güncellendiğinde bildirim ve titreşim
-        LocalNotifications.schedule([{
-          id: 2,
-          title: 'Görev Güncellendi',
-          body: 'Görev başarıyla güncellendi!',
-        }]);
-
-        if (Device.os === 'Android') {
-          this.vibrate();
-        }
-      })
+    return this.http.put<Task>(`${this.apiUrl}/${task.id}`, task).pipe(
+      catchError(this.handleError)
     );
   }
 
-  private vibrate() {
-    if (Device.os === 'Android') {
-      const context = android.context; // Android context
-      const vibrator = context.getSystemService(android.content.Context.VIBRATOR_SERVICE) as android.os.Vibrator;
-      if (vibrator) {
-        vibrator.vibrate(500); // 500ms titreşim
-      }
-    } else if (Device.os === 'iOS') {
-      // iOS'ta titreşim (önceki yanıtlardan birini kullanabilirsiniz)
-      const UIApplication = require('@nativescript/core').UIApplication;
-      UIApplication.sharedApplication().playSystemSound(4095); // Titreşim sesi
-    }
+  deleteTask(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    console.error('An error occurred:', error.error.message);
+    return throwError('Something went wrong; please try again later.');
   }
 }

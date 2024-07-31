@@ -1,6 +1,10 @@
-<StackLayout>
-    <TextField formControlName="username" hint="Kullanıcı Adı"></TextField>
-    <TextField formControlName="password" hint="Şifre" secure="true"></TextField>
-    <Button text="Giriş Yap" (tap)="onSubmit()"></Button>
-  </StackLayout>
-  
+<ActionBar title="My Task Manager"></ActionBar>
+<StackLayout [formGroup]="loginForm" padding="20">
+  <Label text="Username:" class="input-label"></Label>
+  <TextField formControlName="username" hint="Enter your username" autocorrect="false" autocapitalizationType="none" class="input"></TextField>
+
+  <Label text="Password:" class="input-label" marginTop="20"></Label>
+  <TextField formControlName="password" hint="Enter your password" secure="true" class="input"></TextField>
+
+  <Button text="Login" (tap)="onSubmit()" class="btn btn-primary" marginTop="20"></Button>
+</StackLayout>

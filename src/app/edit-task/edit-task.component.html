@@ -1,0 +1,7 @@
+<ActionBar title="Edit Task"></ActionBar>
+
+<StackLayout padding="20">
+  <TextField [(ngModel)]="task.title" hint="Görev Başlığı"></TextField>
+  <Picker [items]="statuses" [(ngModel)]="task.status"></Picker>
+  <Button text="Görev Güncelle" (tap)="updateTask()"></Button>
+</StackLayout>
