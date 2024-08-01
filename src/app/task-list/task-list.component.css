@@ -1,0 +1,6 @@
+.list-group-item {
+  margin: 10px 0;
+  padding: 10px;
+  border-bottom-width: 1px;
+  border-bottom-color: #ccc;
+}

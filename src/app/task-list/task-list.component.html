@@ -1,16 +1,16 @@
 <ActionBar title="Task List"></ActionBar>
 
-<ScrollView>
-  <StackLayout>
-    <Label [text]="'Hoş geldin, ' + username"></Label>
-    <Button text="Çıkış Yap" (tap)="logout()"></Button>
-    <ListView [items]="tasks">
-      <ng-template let-task="item">
+<StackLayout height="100%">
+  <Label [text]="'Hoş geldin, ' + username"></Label>
+  <Button text="Çıkış Yap" (tap)="logout()"></Button>
+  <ListView [items]="tasks" height="80%" (itemTap)="onItemTap($event)">
+    <ng-template let-task="item">
+      <StackLayout class="list-group-item">
         <Label [text]="'Görev Adı: ' + task.title"></Label>
         <Label [text]="'Durum: ' + task.status"></Label>
         <Button text="Düzenle" (tap)="navigateToEditTask(task)"></Button>
-      </ng-template>
-    </ListView>
-    <Button text="Yeni Görev Ekle" (tap)="navigateToAddTask()"></Button>
-  </StackLayout>
-</ScrollView>
+      </StackLayout>
+    </ng-template>
+  </ListView>
+  <Button text="Yeni Görev Ekle" (tap)="navigateToAddTask()"></Button>
+</StackLayout>

@@ -9,15 +9,19 @@ import { Task } from '../models/task.model';
   styleUrls: ['./add-task.component.css']
 })
 export class AddTaskComponent {
-  task: Task = { id: 0, title: '', status: 'Pending', completed: false };
-
+[x: string]: any;
+  task: Task = { id: 0, title: '', status: '', completed: false };
+  status = [];
   constructor(private taskService: TaskService, private router: Router) {}
 
   onAddTask(): void {
-    this.task.id = Math.floor(Math.random() * 10000); // Benzersiz ID atanması
+    console.log('Yeni Görev:', this.task);
     this.taskService.createTask(this.task).subscribe((newTask) => {
       console.log('Görev başarıyla oluşturuldu', newTask);
       this.router.navigate(['/tasks']);
     });
   }
 }
+
+
+

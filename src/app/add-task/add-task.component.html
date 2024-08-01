@@ -1,6 +1,6 @@
 <ActionBar title="Add Task"></ActionBar>
 <StackLayout padding="20">
   <TextField [(ngModel)]="task.title" hint="Görev Başlığı"></TextField>
-  <Label text="Görev Durumu"></Label>
+  <TextField [(ngModel)]="task.status" hint="Görev Durumu"></TextField>
   <Button text="Görev Ekle" (tap)="onAddTask()"></Button>
 </StackLayout>

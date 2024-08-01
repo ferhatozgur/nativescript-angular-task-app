@@ -10,7 +10,6 @@ import { TaskListComponent } from './task-list/task-list.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { EditTaskComponent } from './edit-task/edit-task.component';
 import { TaskService } from './task.service';
-//import { PickerValueAccessor } from './select-value-accessor.directive'; // Yeni dosyayı buraya ekleyin
 
 @NgModule({
   declarations: [
@@ -19,8 +18,7 @@ import { TaskService } from './task.service';
     TaskFormComponent,
     TaskListComponent,
     AddTaskComponent,
-    EditTaskComponent,
-  //  PickerValueAccessor // Yeni dosyayı buraya ekleyin
+    EditTaskComponent
   ],
   imports: [
     NativeScriptModule,
@@ -29,7 +27,7 @@ import { TaskService } from './task.service';
     HttpClientModule,
     FormsModule,
     NativeScriptFormsModule,
-    ReactiveFormsModule // ReactiveFormsModule burada yüklendi
+    ReactiveFormsModule
   ],
   providers: [
     TaskService

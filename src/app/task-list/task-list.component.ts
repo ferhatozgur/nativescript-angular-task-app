@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SecureStorage } from '@nativescript/secure-storage';
-import { RouterExtensions } from '@nativescript/angular';
+import { Router } from '@angular/router';
 import { TaskService } from '../task.service';
 import { Task } from '../models/task.model';
 
@@ -10,13 +10,11 @@ import { Task } from '../models/task.model';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasks: Task[] = []; // Manuel eklenen görevler
-  apiTasks: Task[] = []; // API'den çekilen görevler
+  tasks: Task[] = [];
   username: string | null = '';
   secureStorage: SecureStorage;
-  errorMessage: string = '';
 
-  constructor(private taskService: TaskService, private router: RouterExtensions) {
+  constructor(private taskService: TaskService, private router: Router) {
     this.secureStorage = new SecureStorage();
   }
 
@@ -25,10 +23,33 @@ export class TaskListComponent implements OnInit {
       this.username = value ? value : 'Kullanıcı';
     });
 
-    // API'den görevleri çekip, sadece apiTasks değişkenine atıyoruz
-    this.taskService.getTasks().subscribe(data => {
-      this.apiTasks = data;
+    this.loadTasks();
+
+    this.taskService.taskAdded$.subscribe(newTask => {
+      const index = this.tasks.findIndex(task => task.id === newTask.id);
+      if (index !== -1) {
+        // Güncellenmiş veya silinmiş görevi listeden kaldır
+        if (!newTask.title) {
+          this.tasks.splice(index, 1);
+        } else {
+          this.tasks[index] = newTask;
+        }
+      } else {
+        // Yeni görevi listeye ekle
+        this.tasks.push(newTask);
+      }
+      this.refreshList(); // Listeyi yenile
     });
+  }
+
+  loadTasks(): void {
+    this.taskService.getTasks().subscribe(data => {
+      this.tasks = data;
+    });
+  }
+
+  refreshList() {
+    this.tasks = [...this.tasks]; // Listeyi yenilemek için kopyala
   }
 
   logout() {
@@ -37,18 +58,13 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-navigateToAddTask() {
-  console.log('Navigating to Add Task');
-  this.router.navigate(['/add-task']);
-}
-
-navigateToEditTask(task: Task) {
-  console.log('Navigating to Edit Task', task);
-  this.router.navigate(['/edit-task', task.id]);
-}
-
-
-  addTask(newTask: Task) {
-    this.tasks.push(newTask);
+  navigateToAddTask() {
+    this.router.navigate(['/add-task']);
   }
+
+  navigateToEditTask(task: Task) {
+    this.router.navigate(['/edit-task', task.id]);
+  }
+
+  onItemTap(event): void {}
 }

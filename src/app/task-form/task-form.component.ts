@@ -9,7 +9,7 @@ import { Task } from '../models/task.model';
   styleUrls: ['./task-form.component.css']
 })
 export class TaskFormComponent implements OnInit {
-  @Input() task: Task = { id: 0, title: '', status: 'Pending', completed: false };
+  @Input() task: Task = { id: 0, title: '', status: '', completed: false };
   taskForm: FormGroup;
   statuses = ['Pending', 'Completed', 'In Progress', 'Cancelled'];
 
@@ -30,9 +30,19 @@ export class TaskFormComponent implements OnInit {
         ...this.task,
         ...this.taskForm.value
       };
-      this.taskService.createTask(updatedTask).subscribe(response => {
-        console.log('Görev başarıyla oluşturuldu', response);
-      });
+      if (this.task.id === 0) {
+        this.taskService.createTask(updatedTask).subscribe(response => {
+          console.log('Görev başarıyla oluşturuldu', response);
+        }, error => {
+          console.error('Görev oluşturulurken hata:', error);
+        });
+      } else {
+        this.taskService.updateTask(this.task.id, updatedTask).subscribe(response => {
+          console.log('Görev başarıyla güncellendi', response);
+        }, error => {
+          console.error('Görev güncellenirken hata:', error);
+        });
+      }
     }
   }
 }

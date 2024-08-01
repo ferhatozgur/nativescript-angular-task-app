@@ -1,29 +1,28 @@
 .input {
-    border-width: 1;
-    border-color: #cccccc;
-    margin-bottom: 10;
-    padding: 10;
-    font-size: 16;
-  }
-  
-  .input-label {
-    font-size: 16;
-    margin-bottom: 5;
-  }
-  
-  .btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10;
-    text-align: center;
-    border-radius: 5;
-  }
-  
-  .btn-primary {
-    background-color: #007bff;
-  }
-  
-  StackLayout {
-    background-color: #ffffff;
-  }
-  
+  border-width: 1;
+  border-color: #cccccc;
+  margin-bottom: 10;
+  padding: 10;
+  font-size: 16;
+}
+
+.input-label {
+  font-size: 16;
+  margin-bottom: 5;
+}
+
+.btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10;
+  text-align: center;
+  border-radius: 5;
+}
+
+.btn-primary {
+  background-color: #007bff;
+}
+
+StackLayout {
+  background-color: #ffffff;
+}

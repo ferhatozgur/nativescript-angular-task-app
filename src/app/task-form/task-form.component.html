@@ -1,6 +1,8 @@
-<StackLayout>
-    <TextField formControlName="title" hint="Görev Başlığı"></TextField>
-    <Picker formControlName="status" [items]="statuses"></Picker>
-    <Button text="Görev Ekle" (tap)="onSubmit()"></Button>
-  </StackLayout>
-  
+<StackLayout padding="20">
+  <TextField formControlName="title" hint="Görev Başlığı"></TextField>
+  <Label text="Görev Durumu Nedir"></Label>
+  <select formControlName="status">
+    <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+  </select>
+  <Button text="Görev Ekle" (tap)="onSubmit()"></Button>
+</StackLayout>
