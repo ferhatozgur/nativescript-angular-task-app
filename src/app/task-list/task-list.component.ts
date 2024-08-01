@@ -10,6 +10,7 @@ import { Task } from '../models/task.model';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
+[x: string]: any;
   tasks: Task[] = [];
   username: string | null = '';
   secureStorage: SecureStorage;
@@ -26,6 +27,7 @@ export class TaskListComponent implements OnInit {
     this.loadTasks();
 
     this.taskService.taskAdded$.subscribe(newTask => {
+      console.log('Observable\'dan gelen yeni görev:', newTask);
       const index = this.tasks.findIndex(task => task.id === newTask.id);
       if (index !== -1) {
         // Güncellenmiş veya silinmiş görevi listeden kaldır

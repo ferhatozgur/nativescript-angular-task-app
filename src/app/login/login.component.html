@@ -1,10 +1,12 @@
 <ActionBar title="My Task Manager"></ActionBar>
 <StackLayout [formGroup]="loginForm" padding="20">
-  <Label text="Username:" class="input-label"></Label>
+  <img style="width: 1000px; height: 1000px;" src="https://i.imgur.com/Kw2AEku.png" class="logo">
   <TextField formControlName="username" hint="Enter your username" autocorrect="false" autocapitalizationType="none" class="input"></TextField>
 
-  <Label text="Password:" class="input-label" marginTop="20"></Label>
   <TextField formControlName="password" hint="Enter your password" secure="true" class="input"></TextField>
 
   <Button text="Login" (tap)="onSubmit()" class="btn btn-primary" marginTop="20"></Button>
 </StackLayout>
+
+
+

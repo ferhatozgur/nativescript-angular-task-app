@@ -2,6 +2,6 @@
 <StackLayout padding="20">
   <TextField [(ngModel)]="task.title" hint="Görev Başlığı"></TextField>
   <TextField [(ngModel)]="task.status" hint="Görev Durumu"></TextField>
-  <Button text="Güncelle" (tap)="updateTask()"></Button>
-  <Button text="Sil" (tap)="deleteTask()"></Button>
+  <Button class="button", text="Güncelle" (tap)="updateTask()"></Button>
+  <Button class="button1", text="Sil" (tap)="deleteTask()"></Button>
 </StackLayout>

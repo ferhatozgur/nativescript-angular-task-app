@@ -1,6 +1,6 @@
-<StackLayout padding="20">
-  <TextField formControlName="title" hint="Görev Başlığı"></TextField>
-  <Label text="Görev Durumu Nedir"></Label>
+<StackLayout>
+  <TextField formControlName="title" hint="Görevv Başlığı"></TextField>
+  <Label text="Görev Durumu"></Label>
   <select formControlName="status">
     <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
   </select>
